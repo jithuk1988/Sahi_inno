@@ -3,8 +3,11 @@ _include("inno_fun.sah");
 
 _navigateTo("https://q3.innotas.io");
 InnoLogin("v5new6auto", "innotas");
-ProjectCreation("Auto Sahi 03", "1/1/2017", "31/12/2017");
-ProjectVerify("Auto Sahi 03", "2:High", "Program 01", "Proposed");
+
+var $date = " " + new Date();
+$protitle="Auto Sahi- " + $date;
+ProjectCreation($protitle, "1/1/2017", "31/12/2017");
+ProjectVerify($protitle, "2:High", "Program 01", "Proposed");
 _click(_div("Staffing"));
 StaffAddResource("Full 1, Auto", "1/1/2017", "31/12/2017", "200");
 StaffAddResource("Full 2, Auto", "1/1/2017", "31/12/2017", "100");

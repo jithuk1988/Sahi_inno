@@ -6,7 +6,7 @@ function InnoLogin($login, $password){
 }
 
 function ProjectCreation($title, $startDate, $targetDate){
-	
+
 	_click(_span("button-1025-btnIconEl"));
 	_click(_span("New[1]"));
 	_click(_textbox("categoryId"));
@@ -30,8 +30,8 @@ function ProjectCreation($title, $startDate, $targetDate){
 	_click(_span("Save"));
 }
 
-function ProjectVerify($Auto_Sahi_03, $LLPriorityId, $parentInstance, $LLStatusId){
-	_assertContainsText($Auto_Sahi_03, _div($Auto_Sahi_03));
+function ProjectVerify($protitlever, $LLPriorityId, $parentInstance, $LLStatusId){
+	_assertEqual($protitlever, _getText(_div($protitlever)));
 	_assertEqual($LLPriorityId, _getValue(_textbox("LLPriorityId")));
 	_assertEqual($parentInstance, _getValue(_textbox("parentInstance")));
 	_assertEqual($LLStatusId, _getValue(_textbox("LLStatusId")));
@@ -63,7 +63,7 @@ function StaffVerify($summaryRendererCell){
 
 function CleanProjDeletion(){
 	_click(_span("button-1025-btnIconEl"));
-	_rightClick(_span("Auto Sahi 03"));
+	_rightClick(_span($protitle));
 	_click(_span("Delete[2]"));
 	_click(_span("Yes"));
 }
