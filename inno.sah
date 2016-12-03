@@ -1,9 +1,6 @@
 _include("inno_fun.sah");
-/* --Functions Above-- */
-
 _navigateTo("https://q3.innotas.io");
 InnoLogin("v5new6auto", "innotas");
-
 var $date = " " + new Date();
 $protitle="Auto Sahi- " + $date;
 ProjectCreation($protitle, "1/1/2017", "31/12/2017");
@@ -19,4 +16,6 @@ StaffBillrateupdate("Full 2, Auto");
 _click(_div("Tasks(dd) (0)"));
 CreateTask("Auto Task 1","10");
 CreateTask("Auto Task 2","20");
-CleanProjDeletion();
+//CleanProjDeletion();
+_click(_div("Reports"));
+reportverify("sahi", "Report: Project information with Financials-Sahi");
