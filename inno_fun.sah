@@ -1,0 +1,97 @@
+function InnoLogin($login, $password){
+
+	_setValue(_textbox("login"), $login);
+	_setValue(_password("password"), $password);
+	_click(_submit("Log in to Innotas"));
+}
+
+function ProjectCreation($title, $startDate, $targetDate){
+	
+	_click(_span("button-1025-btnIconEl"));
+	_click(_span("New[1]"));
+	_click(_textbox("categoryId"));
+	_click(_listItem("Auto Category"));
+	_click(_textbox("parentId"));
+	_click(_listItem("Program 01"));
+	_click(_span("Next"));
+	_setValue(_textarea("title"), $title);
+	_click(_span("Priority"));
+	_click(_div("2:High"));
+	_click(_span("Confidential Project"));
+	_click(_div("Yes"));
+	_click(_span("Allocation Units"));
+	_click(_div("Hours"));
+	_click(_span("Status"));
+	_click(_div("Proposed"));
+	_click(_textbox("startDate"));
+	_setValue(_textbox("startDate"), $startDate);
+	_click(_textbox("targetDate"));
+	_setValue(_textbox("targetDate"), $targetDate);
+	_click(_span("Save"));
+}
+
+function ProjectVerify($Auto_Sahi_03, $LLPriorityId, $parentInstance, $LLStatusId){
+	_assertContainsText($Auto_Sahi_03, _div($Auto_Sahi_03));
+	_assertEqual($LLPriorityId, _getValue(_textbox("LLPriorityId")));
+	_assertEqual($parentInstance, _getValue(_textbox("parentInstance")));
+	_assertEqual($LLStatusId, _getValue(_textbox("LLStatusId")));
+}
+
+function StaffAddResource($resource, $startDate_1, $endDate, $totalHours){
+
+	_click(_span("Add Resource(dd)"));
+	_click(_textbox("resource"));
+	_setValue(_textbox("resource", _near(_span("Resource(dd):"))), $resource);
+	_click(_div($resource));
+	_click(_span("Add"));
+	_click(_span("Add Selected"));
+	_rightClick(_div($resource));
+	_click(_span("Edit Allocation"));
+	_click(_textbox("startDate[1]"));
+	_setValue(_textbox("startDate[1]"), $startDate_1);
+	_click(_textbox("endDate"));
+	_setValue(_textbox("endDate"), $endDate);
+	_click(_textbox("totalHours"));
+	_setValue(_textbox("totalHours"), $totalHours);
+	_click(_span("Save[1]"));
+}
+
+function StaffVerify($summaryRendererCell){
+	_assertEqual($summaryRendererCell, _getText(_span("summaryRendererCell")));
+	_assertContainsText($summaryRendererCell, _span("summaryRendererCell[1]"));
+}
+
+function CleanProjDeletion(){
+	_click(_span("button-1025-btnIconEl"));
+	_rightClick(_span("Auto Sahi 03"));
+	_click(_span("Delete[2]"));
+	_click(_span("Yes"));
+}
+
+function CreateTask($title,$durationString){
+	_click(_span("All Tasks"));
+	 _keyPress(_span("All Tasks"), 'a', "ALT");
+	 _setValue(_textbox("title"), $title);
+	_setValue(_textbox("durationString"), $durationString);
+	 _keyPress(_textbox("durationString"), [11]);
+	 _keyPress(_textbox("startDateTime"), [13]);
+	_wait(_span("All Tasks"),3000)
+}
+
+function CreateBillrate($title, $rate){
+	_click(_span("New", _near(_div("Billing Rates(dd)[1]"))));
+	_click(_div("New Billing Rate(dd)"));
+	_setValue(_textbox("title"), $title);
+	_click(_div("Full 1, Auto[1]"));
+	_click(_div("$0.00", _near(_div($title))));
+	_setValue(_textbox("rate", _near(_div($title))), $rate);
+
+}
+
+function StaffBillrateupdate($res){
+		_rightClick(_div($res))
+			_click(_span("Edit Allocation"));
+			_click(_textbox("billRate"));
+	_click(_div("Auto Sahi Bill[1]"));
+	 _click(_span("Save[1]"));
+}
