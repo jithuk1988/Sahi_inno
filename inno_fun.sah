@@ -107,4 +107,5 @@ function reportverify($Title, $Report_Project_information_with_Financials_Sahi){
 	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Auto Task 1", _getText(_cell("Auto Task 1")));
 	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Auto Sahi Bill", _getText(_cell("Auto Sahi Bill")));
 	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("$250.00", _getText(_cell("$250.00", _near(_cell("Auto Sahi Bill")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._closeWindow(); 
 }
