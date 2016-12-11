@@ -1,3 +1,6 @@
+
+
+
 function InnoLogin($login, $password){
 
 	_setValue(_textbox("login"), $login);
@@ -109,3 +112,129 @@ function reportverify($Title, $Report_Project_information_with_Financials_Sahi){
 	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("$250.00", _getText(_cell("$250.00", _near(_cell("Auto Sahi Bill")))));
 	_popup($Report_Project_information_with_Financials_Sahi)._closeWindow(); 
 }
+
+function issue_proj($title, $startDate, $targetDate, $closeDate){
+	_call(top.location.reload());
+	try{
+	_click(_span("New"));
+	_setValue(_textarea("title"), $title);
+	_click(_label("Assigned To"));
+	_click(_div("Admin, Innotas (c)"));
+	_click(_label("Priority"));
+	_click(_div("1:Immediate"));
+	_click(_label("Type"));
+	_click(_div("Internal"));
+	_click(_label("Status*"));
+	_click(_div("Seeking Resolution"));
+	_setValue(_textbox("startDate"), $startDate);
+	_setValue(_textbox("targetDate"), $targetDate);
+	_setValue(_textbox("closeDate"), $closeDate);
+	_click(_span("Save"));
+	}
+	catch($e){
+	  _log("Exception occured"); // simple logging. no failure
+	_click(_link("Cancel[1]")); // Corrective action
+	}
+}
+
+function task_schedule($resourceScheduledHours, $resourceScheduledHours1){
+	_click(_div("Tasks(dd) (2)"));
+	_click(_span("Auto Task 1"));
+	_click(_span("x-tab-icon-el x-tab-icon-el-default baseBtn staffing "));
+	_click(_textbox("anyresourceCombo"));
+	_click(_cell("Full 1, Auto as AutoRole"));
+	_setValue(_textbox("resourceScheduledHours"), $resourceScheduledHours);
+	_click(_div("AutoRole[2]"));
+	_keyPress(_div("AutoRole[2]"), 's', "CTRL");
+	_click(_textbox("anyresourceCombo"));
+	_click(_cell("Find Other Resource(dd)..."));
+	_setValue(_textbox("resource", _near(_span("Resource(dd):"))), "admin");
+	_click(_div("QA II"));
+	_click(_span("Add"));
+	_click(_link("OK"));
+	_setValue(_textbox("resourceScheduledHours"), $resourceScheduledHours1);
+	_click(_div("QA II"));
+	_keyPress(_div("QA II"), 's', "CTRL");
+	_click(_span("x-tab-icon-el x-tab-icon-el-default baseBtn iconInfo "));
+}
+
+function task_estimate_labor($title, $fbudget, $festimatedate, $fdatecoveredfrom, $fdatecoveredto){
+	_click(_span("x-tab-icon-el x-tab-icon-el-default baseBtn expensesActionIcon "));
+	_call(top.location.reload());
+	_click(_span("New Estimate"));
+	_setValue(_textbox("title"), $title);
+	_setValue(_textbox("f_budget"), $fbudget);
+	_setValue(_textbox("f_estimate_date"), $festimatedate);
+	_setValue(_textbox("f_date_covered_from"), $fdatecoveredfrom);
+	_setValue(_textbox("f_date_covered_to"), $fdatecoveredto);
+	_click(_label("Labor"));
+	_click(_link("Save"));
+}
+
+function task_estimate_verify($Auto_Estimate_Labor_01, $true){
+	_assertEqual($Auto_Estimate_Labor_01, _getText(_div($Auto_Estimate_Labor_01)));
+	_assertEqual("$1,450.00", _getText(_div("$1,450.00")));
+	_assertEqual("$1,450.00", _getText(_div("$1,450.00[1]")));
+	_assertEqual("12/11/2016", _getText(_div("12/11/2016")));
+	_assertEqual("10/11/2016", _getText(_div("10/11/2016")));
+	_assertContainsText("31/12/2016", _div("31/12/2016"));
+	_assertEqual($true, _getText(_div($true)));
+}
+
+
+function create_resource(){
+	_click(_span("navtoolbar-1016-menu-trigger-btnIconEl"));
+	_call(top.location.reload());
+	_click(_span("New"));
+	//_popup("New")._selectWindow("New");
+	_popup("New")._click(_cell("Create a new Resource(dd)"));
+	_popup("New")._setValue(_textbox("firstName"), $fulldatetime);
+	_popup("New")._setValue(_textbox("lastName"), "Auto");
+	_popup("New")._setSelected(_select("practiceId"), "Business Unit 00");
+	_popup("New")._setSelected(_select("LLDepartmentId"), "Administrative");
+	_popup("New")._setSelected(_select("LLTypeId"), "Full - Time");
+	_popup("New")._setSelected(_select("departmentId"), "Child Unit");
+	_popup("New")._click(_button(" ... "));
+	//_popup("pickListWindow")._selectWindow("pickListWindow");
+	_popup("pickListWindow")._click(_link("Full 1, Auto"));
+	//_popup("New")._selectWindow("New");
+	_popup("New")._click(_button(" ... [1]"));
+	//_popup("pickListWindow")._selectWindow("pickListWindow");
+	_popup("pickListWindow")._click(_link("Test, Resource"));
+	//_popup("New")._selectWindow("New");
+	_popup("New")._click(_button(" ... [2]"));
+	//_popup("pickListWindow")._selectWindow("pickListWindow");
+	_popup("pickListWindow")._click(_link("Test, Resource 3"));
+	//_popup("New")._selectWindow("New");
+	_popup("New")._setSelected(_select("primaryRoleId"), "AutoRole");
+	_popup("New")._setValue(_textbox("targetInternalRate"), "450");
+	_popup("New")._setValue(_textbox("targetBillingRate"), "700");
+	_popup("New")._click(_cell("Termination Date"));
+	_popup("New")._click(_submit("Save"));
+	try
+	{
+	_popup("New")._closeWindow(); 
+	}
+	catch($e){
+		var $a=2;
+		}
+}
+function search_assert_resource(){
+	_setValue(_textbox("Search Text Input"), $fulldatetime);
+	_click(_span("x-btn-icon-el x-btn-icon-el-default-small x-fa fa-search "));
+	_click(_span($fulldatetime));
+	_assertEqual("Auto, "+$fulldatetime, _getText(_cell("Auto, "+$fulldatetime+"[1]")));
+	_assertEqual("Business Unit 00", _getText(_link("Business Unit 00")));
+	_assertEqual("Child Unit", _getText(_cell("Child Unit")));
+	_assertEqual("Full 1, Auto", _getText(_link("Full 1, Auto")));
+	_assertEqual("Test, Resource", _getText(_link("Test, Resource", _near(_cell("Timesheet Approver")))));
+	_assertEqual("Test, Resource 3", _getText(_link("Test, Resource 3", _near(_cell("Expense Approver")))));
+	_assertEqual("AutoRole", _getText(_cell("AutoRole", _near(_cell("Primary Organization Role")))));
+	_assertEqual("450.00", _getText(_cell("450.00", _near(_cell("Internal Rate")))));
+	_assertEqual("$700.00", _getText(_cell("$700.00", _near(_cell("Billable Rate")))));
+	var $resid=_getText(_span("infoBandHeader", _near(_cell("ID"))));
+	_setValue(_textbox("Search Text Input"), $resid);
+	_click(_span("x-btn-icon-el x-btn-icon-el-default-small x-fa fa-search "));
+	_click(_link("Auto, "+$fulldatetime, _near(_div("Resources(dd)"))));
+}
+

@@ -1,8 +1,10 @@
+
+/* --Functions Above-- */
+
 _include("inno_fun.sah");
+_include("vars.sah");
 _navigateTo("https://q3.innotas.io");
 InnoLogin("v5new6auto", "innotas");
-var $date = " " + new Date();
-$protitle="Auto Sahi- " + $date;
 ProjectCreation($protitle, "1/12/2016", "31/12/2017");
 ProjectVerify($protitle, "2:High", "Program 01", "Proposed");
 _click(_div("Staffing"));
@@ -19,26 +21,15 @@ CreateTask("Auto Task 2","20");
 //CleanProjDeletion();
 _click(_div("Reports"));
 reportverify("sahi", "Report: Project information with Financials-Sahi");
+task_schedule("50", "25");
+task_estimate_labor("Auto Estimate Labor 01", "1450", "12/11/2016", "10/11/2016", "31/12/2016");
+task_estimate_verify("Auto Estimate Labor 01", "true");
 
 
-_click(_div("Tasks(dd) (2)"));
-_click(_span("Auto Task 1"));
-_click(_span("x-tab-icon-el x-tab-icon-el-default baseBtn staffing "));
-_click(_textbox("anyresourceCombo"));
-_click(_cell("Full 1, Auto as AutoRole"));
-_setValue(_textbox("resourceScheduledHours"), "50");
-_click(_div("AutoRole[2]"));
-_keyPress(_div("AutoRole[2]"), 's', "CTRL");
-_click(_textbox("anyresourceCombo"));
-_click(_cell("Find Other Resource(dd)..."));
-_setValue(_textbox("resource", _near(_span("Resource(dd):"))), "admin");
-_click(_div("QA II"));
-_click(_span("Add"));
-_click(_link("OK"));
-_setValue(_textbox("resourceScheduledHours"), "25");
-_click(_div("QA II"));
-_keyPress(_div("QA II"), 's', "CTRL");
-_click(_span("x-tab-icon-el x-tab-icon-el-default baseBtn iconInfo "));
 _call(top.location.reload());
-_click(_span("button-1017-btnIconEl"));
-_click(_link("Timesheets"));
+_click(_div("Issues(dd) (0)"));
+issue_proj("Test Sahi Issue", "25/10/2016", "30/12/2016", "28/10/2016");
+create_resource();
+//_popup("New")._expectConfirm("Would you like to create a new User Account for this Resource(dd)? Select OK to create the new User Account. Select CANCEL to create the new Resource(dd) only.", false);
+//_popup("New")._assertEqual("Would you like to create a new User Account for this Resource(dd)? Select OK to create the new User Account. Select CANCEL to create the new Resource(dd) only.", _lastConfirm());
+search_assert_resource();
