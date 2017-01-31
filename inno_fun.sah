@@ -1,6 +1,3 @@
-
-
-
 function InnoLogin($login, $password){
 
 	_setValue(_textbox("login"), $login);
@@ -8,16 +5,20 @@ function InnoLogin($login, $password){
 	_click(_submit("Log in to Innotas"));
 }
 
-function ProjectCreation($title, $startDate, $targetDate){
-
-	_click(_span("button-1025-btnIconEl"));
-	_click(_span("New[1]"));
+function ProjectCreation($title_top, $startDate, $targetDate,$mod){
+	
+	_wait(3000);
+	_click(_byXPath("//a[@aria-label='Projects(dd)' and @data-qtip='Projects(dd)']"));
+	_wait(3000);
+	_call(top.location.reload());
+	_wait(6000);
+	_click(_span("New"));
 	_click(_textbox("categoryId"));
 	_click(_listItem("Auto Category"));
 	_click(_textbox("parentId"));
 	_click(_listItem("Program 01"));
 	_click(_span("Next"));
-	_setValue(_textarea("title"), $title);
+	_setValue(_textarea("title"), $title_top);
 	_click(_span("Priority"));
 	_click(_div("2:High"));
 	_click(_span("Confidential Project"));
@@ -26,6 +27,8 @@ function ProjectCreation($title, $startDate, $targetDate){
 	_click(_div("Hours"));
 	_click(_span("Status"));
 	_click(_div("Proposed"));
+	_click(_textbox("resourceAllocationsOption"));
+	_click(_div($mod));
 	_click(_textbox("startDate"));
 	_setValue(_textbox("startDate"), $startDate);
 	_click(_textbox("targetDate"));
@@ -75,9 +78,13 @@ function CreateTask($title,$durationString){
 	_click(_span("All Tasks"));
 	 _keyPress(_span("All Tasks"), 'a', "ALT");
 	 _setValue(_textbox("title"), $title);
-	_setValue(_textbox("durationString"), $durationString);
-	 _keyPress(_textbox("durationString"), [11]);
-	 _keyPress(_textbox("startDateTime"), [13]);
+	_setValue(_byXPath("//input[@name='durationString']"), $durationString);
+	//	_wait(2000);
+//	 _keyPress(_byXPath("//input[@name='durationString']"), [11]);
+	_wait(2000);
+//	_click(_span("All Tasks"));
+_click(_byXPath("//a[@aria-disabled='false']//*/span[text()='Save']"));
+//	 _keyPress(_textbox("startDateTime"), [13]);
 	_wait(_span("All Tasks"),3000)
 }
 
@@ -126,6 +133,8 @@ function issue_proj($title, $startDate, $targetDate, $closeDate){
 	_click(_div("Internal"));
 	_click(_label("Status*"));
 	_click(_div("Seeking Resolution"));
+_setValue((_byXPath("//div[contains(@class,'newEntityDialog')]/*//span[text()='Problem Description']//ancestor::label//following::div[1]/div/div/div")), "All Tasks20 days1703821769 Auto Task 110 days1703821788 Auto Task 220 days1703821800");
+		_setValue((_byXPath("//div[contains(@class,'newEntityDialog')]/*//span[text()='Problem Resolution']//ancestor::label//following::div[1]/div/div/div")), "All Tasks20 days1703821769 Auto Task 110 days1703821788 Auto Task 220 days1703821800");
 	_setValue(_textbox("startDate"), $startDate);
 	_setValue(_textbox("targetDate"), $targetDate);
 	_setValue(_textbox("closeDate"), $closeDate);
@@ -162,6 +171,7 @@ function task_estimate_labor($title, $fbudget, $festimatedate, $fdatecoveredfrom
 	_click(_span("x-tab-icon-el x-tab-icon-el-default baseBtn expensesActionIcon "));
 	_call(top.location.reload());
 	_click(_span("New Estimate"));
+	_wait(2000);
 	_setValue(_textbox("title"), $title);
 	_setValue(_textbox("f_budget"), $fbudget);
 	_setValue(_textbox("f_estimate_date"), $festimatedate);
@@ -237,4 +247,10 @@ function search_assert_resource(){
 	_click(_span("x-btn-icon-el x-btn-icon-el-default-small x-fa fa-search "));
 	_click(_link("Auto, "+$fulldatetime, _near(_div("Resources(dd)"))));
 }
-
+function verifybottomstaffing()
+{
+	_click(_div("Staffing"));
+	_assertFalse(_span("Add Role"));
+_assertFalse(_span("Add Resource(dd)"));
+	_assertExists(_div("Staffing (Task Planning Mode)"));
+}

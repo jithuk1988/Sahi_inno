@@ -5,8 +5,19 @@ _include("inno_fun.sah");
 _include("vars.sah");
 _navigateTo("https://q3.innotas.io");
 InnoLogin("v5new6auto", "innotas");
-ProjectCreation($protitle, "1/12/2016", "31/12/2017");
-ProjectVerify($protitle, "2:High", "Program 01", "Proposed");
+ProjectCreation($protitle_top, "1/12/2016", "31/12/2017","Project");
+ProjectVerify($protitle_top, "2:High", "Program 01", "Proposed");
+ProjectCreation($protitle_bottom, "1/12/2016", "31/12/2017","Task");
+verifybottomstaffing()
+
+
+_click(_div("Tasks(dd) (0)"));
+CreateTask("Auto Task 1","10 days");
+CreateTask("Auto Task 2","20 days");
+
+
+
+
 _click(_div("Staffing"));
 StaffAddResource("Full 1, Auto", "1/12/2016", "31/12/2017", "200");
 StaffAddResource("Full 2, Auto", "1/12/2016", "31/12/2017", "100");
@@ -15,9 +26,18 @@ _click(_div("Billing Rates(dd)"));
 CreateBillrate("Auto Sahi Bill", "250");
 _click(_div("Staffing"));
 StaffBillrateupdate("Full 2, Auto");
+
+
+
+
+
 _click(_div("Tasks(dd) (0)"));
-CreateTask("Auto Task 1","10");
-CreateTask("Auto Task 2","20");
+CreateTask("Auto Task 1","10 days");
+CreateTask("Auto Task 2","20 days");
+
+
+
+
 //CleanProjDeletion();
 _click(_div("Reports"));
 reportverify("sahi", "Report: Project information with Financials-Sahi");
