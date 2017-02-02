@@ -201,38 +201,33 @@ function create_resource(){
 	_click(_span("navtoolbar-1016-menu-trigger-btnIconEl"));
 	_call(top.location.reload());
 	_click(_span("New"));
-	//_popup("New")._selectWindow("New");
-	_popup("New")._click(_cell("Create a new Resource(dd)"));
-	_popup("New")._setValue(_textbox("firstName"), $fulldatetime);
-	_popup("New")._setValue(_textbox("lastName"), "Auto");
-	_popup("New")._setSelected(_select("practiceId"), "Business Unit 00");
-	_popup("New")._setSelected(_select("LLDepartmentId"), "Administrative");
-	_popup("New")._setSelected(_select("LLTypeId"), "Full - Time");
-	_popup("New")._setSelected(_select("departmentId"), "Child Unit");
-	_popup("New")._click(_button(" ... "));
+	//_selectWindow("Create a new Resource(dd)");
+	//_popup("Create a new Resource(dd)")._click(_cell("Create a new Resource(dd)"));
+	_popup("Create a new Resource(dd)")._setValue(_textbox("firstName"), $fulldatetime);
+	_popup("Create a new Resource(dd)")._setValue(_textbox("lastName"), "Auto");
+	_popup("Create a new Resource(dd)")._setSelected(_select("practiceId"), "Business Unit 00");
+	_popup("Create a new Resource(dd)")._setSelected(_select("LLDepartmentId"), "Administrative");
+	_popup("Create a new Resource(dd)")._setSelected(_select("LLTypeId"), "Full - Time");
+	_popup("Create a new Resource(dd)")._setSelected(_select("departmentId"), "Child Unit");
+	_popup("Create a new Resource(dd)")._click(_button(" ... "));
 	//_popup("pickListWindow")._selectWindow("pickListWindow");
 	_popup("pickListWindow")._click(_link("Full 1, Auto"));
-	//_popup("New")._selectWindow("New");
-	_popup("New")._click(_button(" ... [1]"));
+	//_popup("Create a new Resource(dd)")._selectWindow("New");
+	_popup("Create a new Resource(dd)")._click(_button(" ... [1]"));
 	//_popup("pickListWindow")._selectWindow("pickListWindow");
 	_popup("pickListWindow")._click(_link("Test, Resource"));
-	//_popup("New")._selectWindow("New");
-	_popup("New")._click(_button(" ... [2]"));
+	//_popup("Create a new Resource(dd)")._selectWindow("New");
+	_popup("Create a new Resource(dd)")._click(_button(" ... [2]"));
 	//_popup("pickListWindow")._selectWindow("pickListWindow");
 	_popup("pickListWindow")._click(_link("Test, Resource 3"));
-	//_popup("New")._selectWindow("New");
-	_popup("New")._setSelected(_select("primaryRoleId"), "AutoRole");
-	_popup("New")._setValue(_textbox("targetInternalRate"), "450");
-	_popup("New")._setValue(_textbox("targetBillingRate"), "700");
-	_popup("New")._click(_cell("Termination Date"));
-	_popup("New")._click(_submit("Save"));
-	try
-	{
-	_popup("New")._closeWindow(); 
-	}
-	catch($e){
-		var $a=2;
-		}
+	//_popup("Create a new Resource(dd)")._selectWindow("New");
+	_popup("Create a new Resource(dd)")._setSelected(_select("primaryRoleId"), "AutoRole");
+	_popup("Create a new Resource(dd)")._setValue(_textbox("targetInternalRate"), "450");
+	_popup("Create a new Resource(dd)")._setValue(_textbox("targetBillingRate"), "700");
+	_popup("Create a new Resource(dd)")._click(_cell("Termination Date"));
+	_popup("Create a new Resource(dd)")._click(_submit("Save"));
+	//	_selectWindow("Create a new User");
+	_popup("Create a new User")._closeWindow();	
 }
 function search_assert_resource(){
 	_setValue(_textbox("Search Text Input"), $fulldatetime);
