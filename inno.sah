@@ -5,16 +5,11 @@ _include("inno_fun.sah");
 _include("vars.sah");
 _navigateTo("https://q3.innotas.io");
 InnoLogin("v5new6auto", "innotas");
+//ProjectCreation($protitle_bottom, "1/12/2016", "31/12/2017","Task");
+//verifybottomstaffing();
+create_resource();
 ProjectCreation($protitle_top, "1/12/2016", "31/12/2017","Project");
 ProjectVerify($protitle_top, "2:High", "Program 01", "Proposed");
-ProjectCreation($protitle_bottom, "1/12/2016", "31/12/2017","Task");
-verifybottomstaffing()
-
-
-_click(_div("Tasks(dd) (0)"));
-CreateTask("Auto Task 1","10 days");
-CreateTask("Auto Task 2","20 days");
-
 
 
 
@@ -26,9 +21,6 @@ _click(_div("Billing Rates(dd)"));
 CreateBillrate("Auto Sahi Bill", "250");
 _click(_div("Staffing"));
 StaffBillrateupdate("Full 2, Auto");
-
-
-
 
 
 _click(_div("Tasks(dd) (0)"));
@@ -47,7 +39,9 @@ task_estimate_verify("Auto Estimate Labor 01", "true");
 
 
 _call(top.location.reload());
+
 _click(_div("Issues(dd) (0)"));
+	_wait(6000);
 issue_proj("Test Sahi Issue", "25/10/2016", "30/12/2016", "28/10/2016");
 create_resource();
 //_popup("New")._expectConfirm("Would you like to create a new User Account for this Resource(dd)? Select OK to create the new User Account. Select CANCEL to create the new Resource(dd) only.", false);

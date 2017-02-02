@@ -7,9 +7,9 @@ function InnoLogin($login, $password){
 
 function ProjectCreation($title_top, $startDate, $targetDate,$mod){
 	
-	_wait(3000);
+	_wait(15000);
 	_click(_byXPath("//a[@aria-label='Projects(dd)' and @data-qtip='Projects(dd)']"));
-	_wait(3000);
+	_wait(5000);
 	_call(top.location.reload());
 	_wait(6000);
 	_click(_span("New"));
@@ -77,13 +77,16 @@ function CleanProjDeletion(){
 function CreateTask($title,$durationString){
 	_click(_span("All Tasks"));
 	 _keyPress(_span("All Tasks"), 'a', "ALT");
+	_wait(8000);
 	 _setValue(_textbox("title"), $title);
-	_setValue(_byXPath("//input[@name='durationString']"), $durationString);
+	_setValue(_textbox("durationString"), $durationString);
+	 _keyPress(_textbox("durationString"), 13);
 	//	_wait(2000);
 //	 _keyPress(_byXPath("//input[@name='durationString']"), [11]);
 	_wait(2000);
 //	_click(_span("All Tasks"));
-_click(_byXPath("//a[@aria-disabled='false']//*/span[text()='Save']"));
+//_click(_textbox("completeDate[1]"));
+//_click(_byXPath("//a[@aria-disabled='false']//*/span[text()='Save']"));
 //	 _keyPress(_textbox("startDateTime"), [13]);
 	_wait(_span("All Tasks"),3000)
 }
@@ -113,7 +116,7 @@ function reportverify($Title, $Report_Project_information_with_Financials_Sahi){
 	_click(_span("Run"));
 	_click(_span("Run[2]"));
 	_popup($Report_Project_information_with_Financials_Sahi)._click(_div("Project information with Financials-Sahi"));
-	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual($protitle, _getText(_cell($protitle)));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual($protitle, _getText(_cell($protitle_top)));
 	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Auto Task 1", _getText(_cell("Auto Task 1")));
 	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Auto Sahi Bill", _getText(_cell("Auto Sahi Bill")));
 	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("$250.00", _getText(_cell("$250.00", _near(_cell("Auto Sahi Bill")))));
@@ -125,8 +128,10 @@ function issue_proj($title, $startDate, $targetDate, $closeDate){
 	try{
 	_click(_span("New"));
 	_setValue(_textarea("title"), $title);
-	_click(_label("Assigned To"));
-	_click(_div("Admin, Innotas (c)"));
+	//_click(_label("Assigned To"));
+		_setValue(_textbox("assignedToId"), "Admin, Innotas (c)");
+		_wait(4000);
+//_click(_div("Admin, Innotas (c)"));
 	_click(_label("Priority"));
 	_click(_div("1:Immediate"));
 	_click(_label("Type"));
