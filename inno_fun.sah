@@ -53,13 +53,14 @@ function StaffAddResource($resource, $startDate_1, $endDate, $totalHours){
 	_click(_span("Add Selected"));
 	_rightClick(_div($resource));
 	_click(_span("Edit Allocation"));
-	_click(_textbox("startDate[1]"));
-	_setValue(_textbox("startDate[1]"), $startDate_1);
+	_click(_textbox("startDate"));
+	_setValue(_textbox("startDate"), $startDate_1);
 	_click(_textbox("endDate"));
 	_setValue(_textbox("endDate"), $endDate);
 	_click(_textbox("totalHours"));
 	_setValue(_textbox("totalHours"), $totalHours);
-	_click(_span("Save[1]"));
+	_click(_span("Save"));
+	_wait(3000);
 }
 
 function StaffVerify($summaryRendererCell){
@@ -78,12 +79,25 @@ function CreateTask($title,$durationString){
 	_click(_span("All Tasks"));
 	 _keyPress(_span("All Tasks"), 'a', "ALT");
 	_wait(8000);
-	 _setValue(_textbox("title"), $title);
-	_setValue(_textbox("durationString"), $durationString);
-	 _keyPress(_textbox("durationString"), 13);
+
+	//_setValue(_textbox("durationString"), $durationString);
+		 _setValue(_textbox("title"), $title);
+	_click(_div("Tasks(dd)"));
+	_wait(4000);
+	_setValue(_textbox("startDateTime"), "2/1/2017 9:00 AM");
+	//	_wait(4000);
+	_setValue(_textbox("targetDateTime"), "2/1/2017 5:00 PM");
+	
+
 	//	_wait(2000);
 //	 _keyPress(_byXPath("//input[@name='durationString']"), [11]);
-	_wait(2000);
+	_wait(4000);
+	_keyPress(_textbox("durationString"), 13);
+	
+	_doubleClick(_span($title))
+			_setValue(_textbox("targetDateTime"), "3/3/2017 5:00 PM");
+		_keyPress(_textbox("targetDateTime"), 13);
+		_wait(4000);
 //	_click(_span("All Tasks"));
 //_click(_textbox("completeDate[1]"));
 //_click(_byXPath("//a[@aria-disabled='false']//*/span[text()='Save']"));
@@ -106,8 +120,44 @@ function StaffBillrateupdate($res){
 			_click(_span("Edit Allocation"));
 			_click(_textbox("billRate"));
 	_click(_div("Auto Sahi Bill[1]"));
-	 _click(_span("Save[1]"));
+	 _click(_span("Save"));
 }
+
+function reportverify2($Title, $Report_Project_information_with_Financials_Sahi)
+{
+	_setValue(_textbox("Title"), $Title);
+	_click(_div("Project information with Financials-Sahi-2"));
+	_rightClick(_div("Project information with Financials-Sahi-2"));
+	_click(_span("Run"));
+	_click(_span("Run[2]"));
+//	window.moveTo(0,0);
+//window.resizeTo(screen.width,screen.height);
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Proposed", _getText(_cell("Proposed", _near(_cell("Project(dd): Status(dd)")))));
+
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("2/1/2017", _getText(_cell("2/1/2017", _near(_cell("Project(dd): Start Date(dd)")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("3/3/2017", _getText(_cell("3/3/2017", _near(_cell("Project(dd): Target Date(dd)")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Hours", _getText(_cell("Hours", _near(_cell("Project(dd): Allocation Units")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Yes", _getText(_cell("Yes", _near(_cell("Project(dd): Confidential Project")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Program 01", _getText(_cell("Program 01", _near(_cell("Project(dd): Program(dd)")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Auto Full 1", _getText(_cell("Auto Full 1", _near(_cell("Billing Rate(dd): Title")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Auto Full 2", _getText(_cell("Auto Full 2", _near(_cell("Billing Rate(dd): Title")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Auto Sahi Bill $250.00", _getText(_row("tableRowEven[1]", _near(_cell("Billing Rate(dd): Title")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("$125.00", _getText(_cell("$125.00", _near(_cell("Auto Full 1")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("$250.00", _getText(_cell("$250.00", _near(_cell("Auto Sahi Bill")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("$0.00", _getText(_cell("$0.00", _near(_cell("Auto Full 2")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Auto Full 1", _getText(_cell("Auto Full 1", _near(_cell("Full 1, Auto")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("200.00", _getText(_cell("200.00", _near(_cell("Auto Full 1", _near(_cell("Full 1, Auto")))))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("1/12/2016", _getText(_cell("1/12/2016", _near(_cell("Full 1, Auto")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("31/12/2017", _getText(_cell("31/12/2017", _near(_cell("Full 1, Auto")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Auto Sahi Bill", _getText(_cell("Auto Sahi Bill", _near(_cell("Full 2, Auto")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("100.00", _getText(_cell("100.00", _near(_cell("Auto Sahi Bill", _near(_cell("Full 2, Auto")))))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("45 days", _getText(_cell("45 days", _near(_cell("Auto Task 1")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("45 days", _getText(_cell("45 days", _near(_cell("Auto Task 2")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("300.00", _getText(_bold("300.00", _near(_bold("Report Totals")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._closeWindow(); 
+}
+
+
 
 function reportverify($Title, $Report_Project_information_with_Financials_Sahi){
 	_setValue(_textbox("Title"), $Title);
@@ -152,7 +202,7 @@ _setValue((_byXPath("//div[contains(@class,'newEntityDialog')]/*//span[text()='P
 }
 
 function task_schedule($resourceScheduledHours, $resourceScheduledHours1){
-	_click(_div("Tasks(dd) (2)"));
+	_click(_byXPath("//div[contains(text(),'Tasks(dd)')]"));
 	_click(_span("Auto Task 1"));
 	_click(_span("x-tab-icon-el x-tab-icon-el-default baseBtn staffing "));
 	_click(_textbox("anyresourceCombo"));
@@ -239,7 +289,7 @@ function search_assert_resource(){
 	_assertEqual("Full 1, Auto", _getText(_link("Full 1, Auto")));
 	_assertEqual("Test, Resource", _getText(_link("Test, Resource", _near(_cell("Timesheet Approver")))));
 	_assertEqual("Test, Resource 3", _getText(_link("Test, Resource 3", _near(_cell("Expense Approver")))));
-	_assertEqual("AutoRole", _getText(_cell("AutoRole", _near(_cell("Primary Organization Role")))));
+	_assertEqual("AutoRole", _getText(_cell("AutoRole", _near(_cell("Primary Role")))));
 	_assertEqual("450.00", _getText(_cell("450.00", _near(_cell("Internal Rate")))));
 	_assertEqual("$700.00", _getText(_cell("$700.00", _near(_cell("Billable Rate")))));
 	var $resid=_getText(_span("infoBandHeader", _near(_cell("ID"))));

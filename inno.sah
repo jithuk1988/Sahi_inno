@@ -5,16 +5,18 @@ _include("inno_fun.sah");
 _include("vars.sah");
 _navigateTo("https://q3.innotas.io");
 InnoLogin("v5new6auto", "innotas");
-//ProjectCreation($protitle_bottom, "1/12/2016", "31/12/2017","Task");
-//verifybottomstaffing();
-create_resource();
-search_assert_resource();
+
+
 ProjectCreation($protitle_top, "1/12/2016", "31/12/2017","Project");
 ProjectVerify($protitle_top, "2:High", "Program 01", "Proposed");
 
-
+_click(_byXPath("//div[contains(text(),'Tasks(dd)')]"));
+CreateTask("Auto Task 1","10 days");
+CreateTask("Auto Task 2","20 days");
 
 _click(_div("Staffing"));
+	_wait(6000);
+_call(top.location.reload());
 StaffAddResource("Full 1, Auto", "1/12/2016", "31/12/2017", "200");
 StaffAddResource("Full 2, Auto", "1/12/2016", "31/12/2017", "100");
 StaffVerify("300.00");
@@ -24,27 +26,29 @@ _click(_div("Staffing"));
 StaffBillrateupdate("Full 2, Auto");
 
 
-_click(_div("Tasks(dd) (0)"));
-CreateTask("Auto Task 1","10 days");
-CreateTask("Auto Task 2","20 days");
+//_click(_byXPath("//div[contains(text(),'Tasks(dd)')]"));
+//CreateTask("Auto Task 1","10 days");
+//CreateTask("Auto Task 2","20 days");
 
 
 
 
 //CleanProjDeletion();
-_click(_div("Reports"));
-reportverify("sahi", "Report: Project information with Financials-Sahi");
+
 task_schedule("50", "25");
 task_estimate_labor("Auto Estimate Labor 01", "1450", "12/11/2016", "10/11/2016", "31/12/2016");
 task_estimate_verify("Auto Estimate Labor 01", "true");
 
-
+_click(_div("Reports"));
+//reportverify("sahi", "Report: Project information with Financials-Sahi");
+reportverify2("sahi", "Report: Project information with Financials-Sahi-2");
 _call(top.location.reload());
-
-_click(_div("Issues(dd) (0)"));
+_click(_byXPath("//div[contains(text(),'Issues(dd)')]"));
 	_wait(6000);
 issue_proj("Test Sahi Issue", "25/10/2016", "30/12/2016", "28/10/2016");
-//create_resource();
-//_popup("New")._expectConfirm("Would you like to create a new User Account for this Resource(dd)? Select OK to create the new User Account. Select CANCEL to //create the new Resource(dd) only.", false);
-//_popup("New")._assertEqual("Would you like to create a new User Account for this Resource(dd)? Select OK to create the new User Account. Select CANCEL to //create the new Resource(dd) only.", _lastConfirm());
-//search_assert_resource();
+create_resource();
+//_popup("New")._expectConfirm("Would you like to create a new User Account for this Resource(dd)? Select OK to create the new User Account. Select CANCEL to create the new Resource(dd) only.", false);
+//_popup("New")._assertEqual("Would you like to create a new User Account for this Resource(dd)? Select OK to create the new User Account. Select CANCEL to create the new Resource(dd) only.", _lastConfirm());
+search_assert_resource();
+ProjectCreation($protitle_bottom, "1/12/2016", "31/12/2017","Task");
+verifybottomstaffing();
