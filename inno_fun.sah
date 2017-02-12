@@ -75,11 +75,15 @@ function CleanProjDeletion(){
 	_click(_span("Yes"));
 }
 
-function CreateTask($title,$durationString){
+function CreateTask($title,$durationString,$capflag,$billtype){
 	_click(_span("All Tasks"));
 	 _keyPress(_span("All Tasks"), 'a', "ALT");
 	_wait(8000);
-
+if($billtype!="0")
+{
+	$title=$title + "-" + $billtype;
+}
+	
 	//_setValue(_textbox("durationString"), $durationString);
 		 _setValue(_textbox("title"), $title);
 	_click(_div("Tasks(dd)"));
@@ -98,6 +102,19 @@ function CreateTask($title,$durationString){
 			_setValue(_textbox("targetDateTime"), "3/3/2017 5:00 PM");
 		_keyPress(_textbox("targetDateTime"), 13);
 		_wait(4000);
+	if($capflag==1)
+	{
+		_click(_span("Is Capitalized?"));
+		 _keyPress(_span("All Tasks"), 's', "CTRL");
+		
+	}
+	if($billtype!="0")
+	{
+		_setValue(_textbox("billingTypeId[1]"), $billtype);
+	_click(_div($billtype));
+			 _keyPress(_span("All Tasks"), 's', "CTRL");
+	}
+	
 //	_click(_span("All Tasks"));
 //_click(_textbox("completeDate[1]"));
 //_click(_byXPath("//a[@aria-disabled='false']//*/span[text()='Save']"));
@@ -151,8 +168,8 @@ function reportverify2($Title, $Report_Project_information_with_Financials_Sahi)
 	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("31/12/2017", _getText(_cell("31/12/2017", _near(_cell("Full 1, Auto")))));
 	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("Auto Sahi Bill", _getText(_cell("Auto Sahi Bill", _near(_cell("Full 2, Auto")))));
 	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("100.00", _getText(_cell("100.00", _near(_cell("Auto Sahi Bill", _near(_cell("Full 2, Auto")))))));
-	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("45 days", _getText(_cell("45 days", _near(_cell("Auto Task 1")))));
-	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("45 days", _getText(_cell("45 days", _near(_cell("Auto Task 2")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("45 days", _getText(_cell("45 days", _near(_cell("Auto Task 1-Non-Cap")))));
+	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("45 days", _getText(_cell("45 days", _near(_cell("Auto Task 2-Cap")))));
 	_popup($Report_Project_information_with_Financials_Sahi)._assertEqual("300.00", _getText(_bold("300.00", _near(_bold("Report Totals")))));
 	_popup($Report_Project_information_with_Financials_Sahi)._closeWindow(); 
 }
@@ -201,9 +218,9 @@ _setValue((_byXPath("//div[contains(@class,'newEntityDialog')]/*//span[text()='P
 	}
 }
 
-function task_schedule($resourceScheduledHours, $resourceScheduledHours1){
+function task_schedule($tasktitle,$resourceScheduledHours, $resourceScheduledHours1){
 	_click(_byXPath("//div[contains(text(),'Tasks(dd)')]"));
-	_click(_span("Auto Task 1"));
+	_click(_span($tasktitle));
 	_click(_span("x-tab-icon-el x-tab-icon-el-default baseBtn staffing "));
 	_click(_textbox("anyresourceCombo"));
 	_click(_cell("Full 1, Auto as AutoRole"));
@@ -222,18 +239,63 @@ function task_schedule($resourceScheduledHours, $resourceScheduledHours1){
 	_click(_span("x-tab-icon-el x-tab-icon-el-default baseBtn iconInfo "));
 }
 
-function task_estimate_labor($title, $fbudget, $festimatedate, $fdatecoveredfrom, $fdatecoveredto){
+function task_sch_time($tasktitle,$resourceScheduledHours, $resourceScheduledHours1)
+{
+	_click(_byXPath("//div[contains(text(),'Tasks(dd)')]"));
+	_click(_span($tasktitle));
+	_click(_span("x-tab-icon-el x-tab-icon-el-default baseBtn staffing "));
+	_click(_textbox("anyresourceCombo"));
+		_click(_cell("Find Other Resource(dd)..."));
+	_setValue(_textbox("resource", _near(_span("Resource(dd):"))), "admin");
+	_click(_div("QA II"));
+	_click(_span("Add"));
+	_click(_link("OK"));
+	_setValue(_textbox("resourceScheduledHours"), $resourceScheduledHours1);
+	_click(_div("QA II"));
+	_keyPress(_div("QA II"), 's', "CTRL");
+	_click(_span("x-tab-icon-el x-tab-icon-el-default baseBtn iconInfo "));
+}
+
+function task_time($tasktitle,$hrs)
+{
+		_click(_byXPath("//div[contains(text(),'Tasks(dd)')]"));
+	_click(_span($tasktitle));
+		_click(_span("x-tab-icon-el x-tab-icon-el-default baseBtn iconInfo "));
+		_call(top.location.reload());
+	_click(_span("Actions[1]"));
+_click(_span("Log Time"));
+	_setValue(_textbox("hours"), $hrs);
+	$proj=_getValue(_textbox("Project(dd):*", _near(_span("Project(dd):"))));
+	$role=_getValue(_textbox("Role:*", _near(_span("Role:"))));
+	$dated=_getValue(_textbox("date", _near(_span("Date:"))));
+	$note="Time charged for  Project- " +$proj+" in Task- "+$tasktitle+ " for Role- "+ $role + " dated "+ $dated;
+	
+	_setValue(_textarea("notes"), $note);
+	_click(_span("Save[1]"));
+	if($tasktitle=="Auto Task-Not to Exceed - $")
+	{
+_assertContainsText("The hours entered cause this task or its summary task to be over the 'not to exceed' amount. The excess hours have been placed in a non-billable entry for this task.", _div("The hours entered cause this task or its summary task to be over the 'not to exceed' amount. The excess hours have been placed in a non-billable entry for this task."));
+		_click(_span("OK"));
+	}
+}
+
+function task_estimate($tasktitle,$esttitle, $fbudget, $festimatedate, $fdatecoveredfrom, $fdatecoveredto,$labflag){
+	_click(_byXPath("//div[contains(text(),'Tasks(dd)')]"));
+	_click(_span($tasktitle));
 	_click(_span("x-tab-icon-el x-tab-icon-el-default baseBtn expensesActionIcon "));
 	_call(top.location.reload());
 	_click(_span("New Estimate"));
 	_wait(2000);
-	_setValue(_textbox("title"), $title);
+	_setValue(_textbox("title"), $esttitle);
 	_setValue(_textbox("f_budget"), $fbudget);
 	_setValue(_textbox("f_estimate_date"), $festimatedate);
 	_setValue(_textbox("f_date_covered_from"), $fdatecoveredfrom);
 	_setValue(_textbox("f_date_covered_to"), $fdatecoveredto);
+	if($labflag==1)
+	{
 	_click(_label("Labor"));
-	_click(_link("Save"));
+	}
+		_click(_link("Save"));
 }
 
 function task_estimate_verify($Auto_Estimate_Labor_01, $true){
@@ -300,7 +362,11 @@ function search_assert_resource(){
 function verifybottomstaffing()
 {
 	_click(_div("Staffing"));
-	_assertFalse(_span("Add Role"));
-_assertFalse(_span("Add Resource(dd)"));
-	_assertExists(_div("Staffing (Task Planning Mode)"));
+	_assertEqual("Staffing (Task Planning Mode)", _getText(_div("Staffing (Task Planning Mode)")));
+_click(_byXPath("//a[@data-qtip='Re-Plan']"));
+	_assertContainsText("Switch resource planning mode to project mode", _label("Switch resource planning mode to project mode"));
+	_click(_span("Cancel[1]"));
+_assertNotVisible(_span("Add Resource(dd)"))
+	_assertNotVisible(_span("Add Role"))
+	
 }

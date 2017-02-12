@@ -1,0 +1,24 @@
+_include("inno_fun.sah");
+_include("vars.sah");
+_navigateTo("https://q3.innotas.io");
+InnoLogin("v5new6auto", "innotas");
+
+
+ProjectCreation($protitle_top, "1/12/2016", "31/12/2017","Project");
+ProjectVerify($protitle_top, "2:High", "Program 01", "Proposed");
+
+_click(_byXPath("//div[contains(text(),'Tasks(dd)')]"));
+CreateTask("Auto Task","10 days",0,"Non-Billable");
+CreateTask("Auto Task","10 days",0,"Fixed Bid");
+CreateTask("Auto Task","10 days",0,"Not to Exceed - $");
+CreateTask("Auto Task","10 days",0,"Time & Materials");
+
+task_sch_time("Auto Task-Time & Materials","50", "25");
+task_sch_time("Auto Task-Non-Billable","50", "25");
+task_sch_time("Auto Task-Not to Exceed - $","50", "25");
+task_sch_time("Auto Task-Fixed Bid","50", "25");
+
+task_time("Auto Task-Time & Materials","5");
+task_time("Auto Task-Non-Billable","10");
+task_time("Auto Task-Not to Exceed - $","15");
+task_time("Auto Task-Fixed Bid","20");

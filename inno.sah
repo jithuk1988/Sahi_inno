@@ -11,8 +11,8 @@ ProjectCreation($protitle_top, "1/12/2016", "31/12/2017","Project");
 ProjectVerify($protitle_top, "2:High", "Program 01", "Proposed");
 
 _click(_byXPath("//div[contains(text(),'Tasks(dd)')]"));
-CreateTask("Auto Task 1","10 days");
-CreateTask("Auto Task 2","20 days");
+CreateTask("Auto Task 1-Non-Cap","10 days",0,"0");
+CreateTask("Auto Task 2-Cap","20 days",1,"0");
 
 _click(_div("Staffing"));
 	_wait(6000);
@@ -35,9 +35,12 @@ StaffBillrateupdate("Full 2, Auto");
 
 //CleanProjDeletion();
 
-task_schedule("50", "25");
-task_estimate_labor("Auto Estimate Labor 01", "1450", "12/11/2016", "10/11/2016", "31/12/2016");
+task_schedule("Auto Task 1-Non-Cap","50", "25");
+task_estimate("Auto Task 1-Non-Cap","Auto Estimate Labor 01", "1450", "12/11/2016", "10/11/2016", "31/12/2016",1);
 task_estimate_verify("Auto Estimate Labor 01", "true");
+task_estimate("Auto Task 2-Cap","Auto Estimate Non-Labor 01", "2000", "12/11/2016", "10/11/2016", "31/12/2016",0);
+//task_estimate_verify("Auto Estimate Non-Labor 01", "true");
+
 
 _click(_div("Reports"));
 //reportverify("sahi", "Report: Project information with Financials-Sahi");
