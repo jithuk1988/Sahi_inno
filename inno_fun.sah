@@ -218,6 +218,73 @@ _setValue((_byXPath("//div[contains(@class,'newEntityDialog')]/*//span[text()='P
 	}
 }
 
+function del_time()
+{
+_click(_span("x-btn-icon-el x-btn-icon-el-default-toolbar-medium navIcon t1 "));
+_click(_link("Timesheets"));
+_rightClick(_div("3 - Auto Task-Not to Exceed - $"))
+_click(_span("Delete Entry(Del)"));
+_click(_span("Delete"));
+_rightClick(_div("2 - Auto Task-Fixed Bid"))
+_click(_span("Delete Entry(Del)"));
+_click(_span("Delete"));
+_rightClick(_div("1 - Auto Task-Non-Billable"))
+_click(_span("Delete Entry(Del)"));
+_click(_span("Delete"));
+_rightClick(_div("4 - Auto Task-Time & Materials"))
+_click(_span("Delete Entry(Del)"));
+_click(_span("Delete"));
+}
+
+
+function time_ass_del()
+{
+if(_isVisible(_div("4 - Auto Task-Time & Materials"))==true)
+{
+_rightClick(_div("4 - Auto Task-Time & Materials"))
+_click(_span("Delete Entry(Del)"));
+_click(_span("Delete"));
+}
+
+else
+{
+$b=1;
+}
+if(_isVisible(_div("2 - Auto Task-Fixed Bid"))==true)
+{
+_rightClick(_div("2 - Auto Task-Fixed Bid"))
+_click(_span("Delete Entry(Del)"));
+_click(_span("Delete"));
+}
+else
+{
+$a=1;
+}
+
+if(_isVisible(_div("1 - Auto Task-Non-Billable"))==true)
+{
+_rightClick(_div("1 - Auto Task-Non-Billable"))
+_click(_span("Delete Entry(Del)"));
+_click(_span("Delete"));
+}
+
+else
+{
+$wa=1;
+}
+if(_isVisible(_div("3 - Auto Task-Not to Exceed - $"))==true)
+{
+_rightClick(_div("3 - Auto Task-Not to Exceed - $"))
+_click(_span("Delete Entry(Del)"));
+_click(_span("Delete"));
+}
+else
+{
+$qw=1;
+}
+}
+
+
 function task_schedule($tasktitle,$resourceScheduledHours, $resourceScheduledHours1){
 	_click(_byXPath("//div[contains(text(),'Tasks(dd)')]"));
 	_click(_span($tasktitle));

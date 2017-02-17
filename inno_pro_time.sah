@@ -2,7 +2,7 @@ _include("inno_fun.sah");
 _include("vars.sah");
 _navigateTo("https://q3.innotas.io");
 InnoLogin("v5new6auto", "innotas");
-
+time_ass_del();
 
 ProjectCreation($protitle_top, "1/12/2016", "31/12/2017","Project");
 ProjectVerify($protitle_top, "2:High", "Program 01", "Proposed");
@@ -22,3 +22,4 @@ task_time("Auto Task-Time & Materials","5");
 task_time("Auto Task-Non-Billable","10");
 task_time("Auto Task-Not to Exceed - $","15");
 task_time("Auto Task-Fixed Bid","20");
+del_time();
